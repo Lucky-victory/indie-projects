@@ -1,10 +1,16 @@
 import { ReactNode } from "react";
 import AppChakraProvider from "./chakra";
 
-export default function AppProviders({ children }: { children: ReactNode }) {
+export default function AppProviders({
+  children,
+  cookies,
+}: {
+  children: ReactNode;
+  cookies: string;
+}) {
   return (
     <>
-      <AppChakraProvider>{children}</AppChakraProvider>
+      <AppChakraProvider cookies={cookies}>{children}</AppChakraProvider>
     </>
   );
 }

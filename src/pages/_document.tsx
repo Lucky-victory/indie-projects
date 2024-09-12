@@ -7,6 +7,7 @@ export default function Document() {
       <body className="antialiased">
         <Main />
         <NextScript />
+        {/* <ColorModeScript initialColorMode={theme.config.initialColorMode} /> */}
       </body>
     </Html>
   );

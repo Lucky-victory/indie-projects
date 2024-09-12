@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
           }
         `}
       </style>
-      <AppProviders>
+      <AppProviders cookies={pageProps.cookies}>
         <Component {...pageProps} />;
       </AppProviders>
     </>
