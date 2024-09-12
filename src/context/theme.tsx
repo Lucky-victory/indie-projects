@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface Theme {
   name: string;
@@ -15,12 +21,12 @@ const ThemeContext = createContext<ThemeContextValue>(null);
 
 export const useTheme = () => useContext(ThemeContext);
 
-export const ThemeProvider: React.FC = ({ children }) => {
+export const AppThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>(null);
 
   const loadTheme = async (themeName: string) => {
     // In a real-world scenario, this might come from an API or a dynamic import
-    const themeModule = await import(`./themes/${themeName}`);
+    const themeModule = await import(`../themes/${themeName}`);
     return themeModule.default;
   };
 
@@ -41,18 +47,5 @@ export const ThemeProvider: React.FC = ({ children }) => {
     <ThemeContext.Provider value={{ theme, switchTheme }}>
       {children}
     </ThemeContext.Provider>
-  );
-};
-
-// Usage in a component
-const ThemeSwitcher = () => {
-  const { switchTheme } = useTheme();
-
-  return (
-    <select onChange={(e) => switchTheme(e.target.value)}>
-      <option value="default">Default Theme</option>
-      <option value="dark">Dark Theme</option>
-      {/* other themes */}
-    </select>
   );
 };

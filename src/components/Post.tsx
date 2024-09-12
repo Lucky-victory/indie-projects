@@ -1,17 +1,18 @@
 import React from "react";
-import { useTheme } from "../theme-context";
+import { useTheme } from "../context/theme";
+import { POST_AUTHOR } from "@/types/theme";
 
 interface PostProps {
   post: {
     id: string;
     title: string;
     content: string;
-    author: string;
-    publishedDate: string;
+    author: POST_AUTHOR;
+    published_at: string;
   };
 }
 
-const Post: React.FC<PostProps> = ({ post }) => {
+export const Post: React.FC<PostProps> = ({ post }) => {
   const { theme } = useTheme();
 
   // Default components if theme doesn't provide them
@@ -20,7 +21,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
     Content: ({ children }) => <div className="content">{children}</div>,
     Meta: ({ author, date }) => (
       <div className="meta">
-        By {author} on {date}
+        By {author?.name} on {date}
       </div>
     ),
   };
@@ -31,7 +32,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
   return (
     <article>
       <Slots.Title>{post.title}</Slots.Title>
-      <Slots.Meta author={post.author} date={post.publishedDate} />
+      <Slots.Meta author={post.author} date={post.published_at} />
       <Slots.Content>{post.content}</Slots.Content>
     </article>
   );

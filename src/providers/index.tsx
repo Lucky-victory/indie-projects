@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import AppChakraProvider from "./chakra";
+import { AppThemeProvider } from "@/context/theme";
 
 export default function AppProviders({
   children,
@@ -10,7 +11,9 @@ export default function AppProviders({
 }) {
   return (
     <>
-      <AppChakraProvider cookies={cookies}>{children}</AppChakraProvider>
+      <AppThemeProvider>
+        <AppChakraProvider cookies={cookies}>{children}</AppChakraProvider>
+      </AppThemeProvider>
     </>
   );
 }
