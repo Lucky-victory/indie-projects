@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "../context/theme";
+import { useTheme } from "../core/context/theme";
 import { NestedPropertyType, POST_AUTHOR, THEME } from "@/types/theme";
 import { HStack, Text } from "@chakra-ui/react";
 

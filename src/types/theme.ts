@@ -13,6 +13,7 @@ export interface POST_META {
 }
 // Theme interface for defining a theme with its components and their props
 export interface THEME {
+  slug: string;
   name: string;
   components?: {
     post?: {
@@ -29,6 +30,7 @@ export type THEME_CONFIG = {
    * The name of the theme
    */
   name: string;
+  slug: string;
   /**
    * Theme description
    */

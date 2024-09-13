@@ -1,9 +1,9 @@
 {
   "name": "Modern",
+  "slug": "modern",
   "assetDirectory": "/assets/images",
   "screenshot": "screenshot-sample.png",
   "authorName": "Lucky victory",
-  "authorWebsite": "https://devvick.com",
   "description": "Modern is the perfect theme for your blog",
   "tags": ["Modern", "SEO", "Fast"]
 }

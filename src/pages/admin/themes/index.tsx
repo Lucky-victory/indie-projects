@@ -1,18 +1,25 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { Image } from "@chakra-ui/react";
 import fs from "fs";
 import path from "path";
-
-interface ThemeConfig {
-  name: string;
-  description?: string;
-  screenshot: string;
-  assetDirectory?: string;
-  tags?: string[];
-}
+import React from "react";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Heading,
+  Text,
+  VStack,
+  Tag,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { Image } from "@chakra-ui/react";
+import { THEME_CONFIG } from "@/types/theme";
+import { Link } from "@chakra-ui/next-js";
+import { useTheme } from "@/core/context/theme";
 
 interface ServerSideProps {
-  themeConfigs: ThemeConfig[];
+  themeConfigs: THEME_CONFIG[];
   error?: string;
 }
 
@@ -20,7 +27,7 @@ export const getServerSideProps: GetServerSideProps<
   ServerSideProps
 > = async () => {
   const themesDir = path.join(process.cwd(), "src", "themes");
-  const themeConfigs: ThemeConfig[] = [];
+  const themeConfigs: THEME_CONFIG[] = [];
 
   try {
     const themeDirectories = fs
@@ -33,12 +40,10 @@ export const getServerSideProps: GetServerSideProps<
 
       if (fs.existsSync(configPath)) {
         const configContent = fs.readFileSync(configPath, "utf8");
-        const config: ThemeConfig = JSON.parse(configContent);
+        const config: THEME_CONFIG = JSON.parse(configContent);
 
-        // Use the new URL structure for the screenshot
         const assetDir = config.assetDirectory || "assets";
         const themeDirName = path.basename(themeDir);
-        console.log({ themeDirName, themeDir });
 
         config.screenshot = `/api/theme-assets/${themeDirName}/${assetDir}/${config.screenshot}`;
 
@@ -65,25 +70,99 @@ export default function ThemesPage({
   themeConfigs,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  if (error) {
-    return <div>Error loading theme configs: {error}</div>;
-  }
+  const bgColor = useColorModeValue("white", "gray.800");
+  const textColor = useColorModeValue("gray.600", "gray.200");
+  const imageBoxBg = useColorModeValue("gray.400", "gray.500");
+  const { switchTheme, theme: activeTheme } = useTheme();
 
+  if (error) {
+    return <Text color="red.500">Error loading theme configs: {error}</Text>;
+  }
+  async function setTheme(theme: THEME_CONFIG) {
+    await switchTheme(theme.slug);
+  }
   return (
-    <div>
-      <h1>Theme Configurations</h1>
-      {themeConfigs.map((theme, index) => (
-        <div key={index}>
-          <h2>{theme.name}</h2>
-          {theme.description && <p>{theme.description}</p>}
-          <Image
-            src={theme.screenshot}
-            alt={`Screenshot of ${theme.name}`}
-            style={{ maxWidth: "300px" }}
-          />
-          {theme.tags && <p>Tags: {theme.tags.join(", ")}</p>}
-        </div>
-      ))}
-    </div>
+    <Container maxW="container.xl" py={8}>
+      <Heading as="h1" mb={8} textAlign="center">
+        Theme Configurations
+      </Heading>
+      <Grid templateColumns="repeat(auto-fit, minmax(300px, 350px))" gap={6}>
+        {themeConfigs.map((theme, index) => (
+          <Box
+            key={index}
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            boxShadow="md"
+            bg={bgColor}
+            transition="all 0.3s"
+            display="flex"
+            flexDirection="column"
+            height="100%"
+            _hover={{ transform: "translateY(-5px)", boxShadow: "lg" }}
+          >
+            <Box bg={imageBoxBg}>
+              <Image
+                src={theme.screenshot}
+                alt={`Screenshot of ${theme.name}`}
+                objectFit="contain"
+                w="100%"
+                h="200px"
+              />
+            </Box>
+            <VStack p={4} align="start" spacing={3} flex={1}>
+              <Heading as="h2" size="md">
+                {theme.name}
+              </Heading>
+              {theme.description && (
+                <Text color={textColor} fontSize="sm">
+                  {theme.description}
+                </Text>
+              )}
+              <Box>
+                {theme.authorName &&
+                  (theme.authorWebsite ? (
+                    <Text as={"span"} fontSize="xs">
+                      By:{" "}
+                      <Link color={"blue.500"} href={theme.authorWebsite}>
+                        {theme.authorName}
+                      </Link>
+                    </Text>
+                  ) : (
+                    <Text as={"span"} fontSize="xs">
+                      By:{" "}
+                      <Text as={"span"} fontWeight={500}>
+                        {theme.authorName}
+                      </Text>
+                    </Text>
+                  ))}
+              </Box>
+              {theme.tags && (
+                <Box>
+                  {theme.tags.map((tag) => (
+                    <Tag key={tag} mr={2} mb={2} size="sm">
+                      {tag}
+                    </Tag>
+                  ))}
+                </Box>
+              )}
+              <Box mt="auto" w={"full"}>
+                <Button
+                  onClick={() => {
+                    setTheme(theme);
+                  }}
+                  colorScheme="blue"
+                  size="sm"
+                  width="full"
+                  isDisabled={theme.slug === activeTheme.slug}
+                >
+                  {theme.slug === activeTheme.slug ? "Active" : "Select Theme"}
+                </Button>
+              </Box>
+            </VStack>
+          </Box>
+        ))}
+      </Grid>
+    </Container>
   );
 }

@@ -1,5 +1,5 @@
 import { Post } from "@/components/Post";
-import { useTheme } from "@/context/theme";
+import { useTheme } from "@/core/context/theme";
 
 export default function Home() {
   return (

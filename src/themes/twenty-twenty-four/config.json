@@ -1,5 +1,6 @@
 {
-  "name": "Twenty Two",
+  "slug": "twenty-twenty-four",
+  "name": "Twenty Twenty Four",
   "assetDirectory": "assets/images",
   "screenshot": "screenshot-sample.png",
   "authorName": "App starter",

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import AppChakraProvider from "./chakra";
-import { AppThemeProvider } from "@/context/theme";
+import { AppThemeProvider } from "@/core/context/theme";
 
 export default function AppProviders({
   children,

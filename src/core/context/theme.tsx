@@ -9,7 +9,7 @@ import React, {
 
 interface ThemeContextValue {
   theme: THEME;
-  switchTheme: (themeName: string) => Promise<void>;
+  switchTheme: (themeSlug: string) => Promise<void>;
 }
 
 const ThemeContext = createContext<ThemeContextValue>(null!);
@@ -19,10 +19,10 @@ export const useTheme = () => useContext(ThemeContext);
 export const AppThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<THEME>(null!);
 
-  const loadTheme = async (themeName: string) => {
+  const loadTheme = async (themeSlug: string) => {
     // In a real-world scenario, this might come from an API or a dynamic import
 
-    const themeModule = await import(`../themes/${themeName}`);
+    const themeModule = await import(`../../themes/${themeSlug}`);
     return themeModule.default;
   };
 
@@ -45,12 +45,12 @@ export const AppThemeProvider = ({ children }: { children: ReactNode }) => {
       if (savedTheme) {
         loadTheme(savedTheme).then(setTheme);
       } else {
-        loadTheme("default").then(setTheme);
+        loadTheme("twenty-twenty-four").then(setTheme);
       }
     } catch (error) {
       // Handle error if localStorage is unavailable
     }
-  }, []);
+  }, [theme]);
 
   if (!theme) return <div>Loading theme...</div>;
 

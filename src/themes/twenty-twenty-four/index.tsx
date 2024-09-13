@@ -2,7 +2,8 @@ import { THEME } from "@/types/theme";
 import { Heading, Text } from "@chakra-ui/react";
 
 export const DefaultTheme: THEME = {
-  name: "default",
+  slug: "twenty-twenty-four",
+  name: "Twenty Twenty Four",
   components: {
     post: {
       Title: ({ title, children }) => (
