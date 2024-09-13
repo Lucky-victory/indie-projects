@@ -1,0 +1,9 @@
+{
+  "name": "Twenty Two",
+  "assetDirectory": "assets/images",
+  "screenshot": "screenshot-sample.png",
+  "authorName": "App starter",
+  "authorWebsite": "https://appstarter.com",
+  "description": "Twenty Twenty Four is the perfect theme for your blog",
+  "tags": ["blog", "SEO", "lightweight"]
+}

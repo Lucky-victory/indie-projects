@@ -24,3 +24,37 @@ export interface THEME {
 }
 
 export type NestedPropertyType<T, K extends keyof T> = NonNullable<T[K]>;
+export type THEME_CONFIG = {
+  /**
+   * The name of the theme
+   */
+  name: string;
+  /**
+   * Theme description
+   */
+  description?: string;
+  /**
+   * Theme tags
+   */
+  tags?: string[];
+  /**
+   * Author's name
+   */
+  authorName?: string;
+  /**
+   * Author's website
+   */
+  authorWebsite?: string;
+  /**
+   * Theme's assets directory (relative to theme's root directory e.g.`assets/`), this is where you add your theme assets
+   */
+  assetDirectory?: string;
+  /**
+   *  Theme's version
+   */
+  version?: string;
+  /**
+   * Screenshot to be displayed at the theme's listings, e.g `screenshot.png` (without the directory `assets/`)
+   */
+  screenshot: string;
+};

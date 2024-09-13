@@ -1,5 +1,5 @@
 import { THEME } from "@/types/theme";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Heading, Text } from "@chakra-ui/react";
 
 export const DefaultTheme: THEME = {
   name: "default",
