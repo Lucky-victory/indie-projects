@@ -1,14 +1,21 @@
 import { THEME } from "@/types/theme";
+import { Heading, Text } from "@chakra-ui/react";
 
 export const DefaultTheme: THEME = {
   name: "default",
   components: {
     post: {
-      Title: ({ children }) => (
-        <h1 className="default-title text-red-500">{children}</h1>
+      Title: ({ title, children }) => (
+        <Heading>
+          {title} {children}
+        </Heading>
       ),
 
-      Content: ({ children }) => <div className="post-content">{children}</div>,
+      Content: ({ content }) => (
+        <div>
+          <Text>{content}</Text>
+        </div>
+      ),
     },
   },
   // other theme configurations...

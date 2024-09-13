@@ -1,9 +1,8 @@
-import { ReactNode } from "react";
+import { ComponentType, ReactNode } from "react";
 
-export interface THEME_COMPONENT_PROP<DATA_PROPS = undefined> {
+export type THEME_COMPONENT_PROP<DATA_PROPS = Record<string, never>> = {
   children?: ReactNode;
-  data?: DATA_PROPS;
-}
+} & DATA_PROPS;
 export interface POST_AUTHOR {
   name: string;
   avatar?: string;
@@ -17,13 +16,11 @@ export interface THEME {
   name: string;
   components?: {
     post?: {
-      Title?: (
-        props: THEME_COMPONENT_PROP<{ title: string }>
-      ) => ReactNode | Element;
-      Content?: (
-        props: THEME_COMPONENT_PROP<{ content: string }>
-      ) => ReactNode | Element;
-      Meta?: (props: THEME_COMPONENT_PROP<POST_META>) => ReactNode | Element;
+      Title?: ComponentType<THEME_COMPONENT_PROP<{ title: string }>>;
+      Content?: ComponentType<THEME_COMPONENT_PROP<{ content: string }>>;
+      Meta?: ComponentType<THEME_COMPONENT_PROP<POST_META>>;
     };
   };
 }
+
+export type NestedPropertyType<T, K extends keyof T> = NonNullable<T[K]>;

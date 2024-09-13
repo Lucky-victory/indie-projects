@@ -6,14 +6,14 @@ export const DefaultTheme: THEME = {
   components: {
     post: {
       Title: ({ children }) => (
-        <Heading className="default-title text-red-500">{children}</Heading>
+        <Heading className="default-title">{children}</Heading>
       ),
 
-      Content: ({ children, data }) => (
+      Content: ({ children, content }) => (
         <div className="post-content">
           {children}
-          <Text color={"red"} p={4} bg={"gray.100"}>
-            {data?.content}
+          <Text p={4} bg={"gray.100"}>
+            {content}
           </Text>
         </div>
       ),

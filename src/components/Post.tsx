@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme } from "../context/theme";
-import { POST_AUTHOR } from "@/types/theme";
+import { NestedPropertyType, POST_AUTHOR, THEME } from "@/types/theme";
+import { HStack, Text } from "@chakra-ui/react";
 
 interface PostProps {
   post: {
@@ -16,24 +17,34 @@ export const Post: React.FC<PostProps> = ({ post }) => {
   const { theme } = useTheme();
 
   // Default components if theme doesn't provide them
-  const defaults = {
+  const defaults: NestedPropertyType<
+    NonNullable<THEME["components"]>,
+    "post"
+  > = {
     Title: ({ children }) => <h1>{children}</h1>,
     Content: ({ children }) => <div className="content">{children}</div>,
-    Meta: ({ author, date }) => (
-      <div className="meta">
-        By {author?.name} on {date}
-      </div>
+    Meta: ({ author, published_at }) => (
+      <HStack className="meta">
+        <Text>
+          By {author?.name} on {new Date(published_at).toDateString()}
+        </Text>
+        <span className="reading-time font-bold text-gray-600">
+          {Math.floor(post.content.split(" ").length / 100)} min read time
+        </span>
+      </HStack>
     ),
   };
 
   // Merge default with theme-provided components
-  const Slots = { ...defaults, ...theme.components.post };
+  const Slots = { ...defaults, ...theme.components?.post };
 
   return (
     <article>
-      <Slots.Title>{post.title}</Slots.Title>
-      <Slots.Meta author={post.author} date={post.published_at} />
-      <Slots.Content>{post.content}</Slots.Content>
+      {Slots.Title && <Slots.Title title={post.title} />}
+      {Slots.Meta && (
+        <Slots.Meta author={post.author} published_at={post.published_at} />
+      )}
+      {Slots.Content && <Slots.Content content={post.content} />}
     </article>
   );
 };
