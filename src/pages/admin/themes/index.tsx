@@ -18,7 +18,7 @@ import { Image } from "@chakra-ui/react";
 import { THEME_CONFIG } from "@/types/theme";
 import { Link } from "@chakra-ui/next-js";
 import { useTheme } from "@/core/context/theme";
-import DashboardLayout from "../layout";
+import DashboardLayout from "../_layout";
 
 interface ServerSideProps {
   themeConfigs: THEME_CONFIG[];
