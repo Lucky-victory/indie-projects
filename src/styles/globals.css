@@ -5,6 +5,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --admin-sidebar-width: 200px;
+  --dash-sidebar-mini-w: 60px;
+  --dash-header-h: 60px;
 }
 
 @layer utilities {

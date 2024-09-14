@@ -10,4 +10,11 @@ export const theme = extendTheme({
     heading: "var(--app-heading-font)",
     body: "var(--app-body-font)",
   },
+  components: {
+    Drawer: {
+      sizes: {
+        xs: { width: "200px" },
+      },
+    },
+  },
 });
